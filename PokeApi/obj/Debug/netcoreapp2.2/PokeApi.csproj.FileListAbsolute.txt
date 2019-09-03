@@ -1,0 +1,11 @@
+C:\Users\rmacphee\source\repos\PokeApp\PokeApi\bin\Debug\netcoreapp2.2\PokeApi.deps.json
+C:\Users\rmacphee\source\repos\PokeApp\PokeApi\bin\Debug\netcoreapp2.2\PokeApi.runtimeconfig.json
+C:\Users\rmacphee\source\repos\PokeApp\PokeApi\bin\Debug\netcoreapp2.2\PokeApi.runtimeconfig.dev.json
+C:\Users\rmacphee\source\repos\PokeApp\PokeApi\bin\Debug\netcoreapp2.2\PokeApi.dll
+C:\Users\rmacphee\source\repos\PokeApp\PokeApi\bin\Debug\netcoreapp2.2\PokeApi.pdb
+C:\Users\rmacphee\source\repos\PokeApp\PokeApi\obj\Debug\netcoreapp2.2\PokeApi.csprojAssemblyReference.cache
+C:\Users\rmacphee\source\repos\PokeApp\PokeApi\obj\Debug\netcoreapp2.2\PokeApi.csproj.CoreCompileInputs.cache
+C:\Users\rmacphee\source\repos\PokeApp\PokeApi\obj\Debug\netcoreapp2.2\PokeApi.AssemblyInfoInputs.cache
+C:\Users\rmacphee\source\repos\PokeApp\PokeApi\obj\Debug\netcoreapp2.2\PokeApi.AssemblyInfo.cs
+C:\Users\rmacphee\source\repos\PokeApp\PokeApi\obj\Debug\netcoreapp2.2\PokeApi.dll
+C:\Users\rmacphee\source\repos\PokeApp\PokeApi\obj\Debug\netcoreapp2.2\PokeApi.pdb
