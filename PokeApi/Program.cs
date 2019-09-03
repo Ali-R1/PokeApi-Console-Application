@@ -22,52 +22,39 @@ namespace PokeApi
             //Console.ReadLine();
 
 
-            //Declaring Variables
-            Boolean loop = true;
+
 
 
             //Starting Greeting Messages.
             Console.WriteLine("Hello and Welcome to Ryan's Pokemon API Application");//Intro message to the user.
-            
+            firstMethod();
+            Console.WriteLine("---------------------");
+            PokemonTCG_API.GetPokemonCards();
+            //  secondMethod();
 
-            do
-             {
-                try
-                {
-                    Console.WriteLine("Please enter a pokedex id");//Tells the user to enter a integer value.
-                    int pokedexID = int.Parse(Console.ReadLine());// Reads the value from the users input.
-
-
-                    if (pokedexID < 1 || pokedexID > 807)//Input validation to make sure value is within the range of all the new pokemon - meltan - melmetal
-                    {
-                        Console.WriteLine("Please enter a value within 1 - 807");// This a message to warn the user of the acceptable range
-
-                    }
-
-                    PokéAPI.GetOnePokemon(pokedexID);//Gets the one pokemon from the users input. 
-                    Console.ReadLine();//Stops the code from running.
+            Console.WriteLine("Would you like to view the TCG card variations? - y/n"); // message to user 
+            string userString = Console.ReadLine();
 
 
+            if (userString.Equals("y"))
+            {
+                //DO API METHOD
+            }
+            else if (userString.Equals("n"))
+            {
+                //BREAK FROM METHOD
+            }
+            else
+            {
+                Console.WriteLine("Please only input either y or n -- for (y)es or (n)o");
+
+            }
 
 
+            Console.WriteLine("Loading information from second API...");
 
 
-
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error: Please only enter a integer value. (Whole numbers)");//Input validation
-
-                }
-            
-
-
-
-
-
-
-        }while( loop.Equals(true));
-    }
+        }
 
 
         public static async void Get151Pokemon()
@@ -93,23 +80,24 @@ namespace PokeApi
                             {
                                 //Now log your data in the console
                                 Console.WriteLine("data------------{0}", data);
-                           /**     JObject parsed = JObject.Parse(data);
-                                foreach (var pair in parsed)
-                                {
-                                    Console.WriteLine("{0}: {1}", pair.Key, pair.Value);
-                                }**/
+                                /**     JObject parsed = JObject.Parse(data);
+                                     foreach (var pair in parsed)
+                                     {
+                                         Console.WriteLine("{0}: {1}", pair.Key, pair.Value);
+                                     }**/
 
 
 
                             }
-                            else 
+                            else
                             {
                                 Console.WriteLine("NO Data----------");
                             }
                         }
                     }
                 }
-            } catch(Exception exception)
+            }
+            catch (Exception exception)
             {
                 Console.WriteLine("Exception Hit------------");
                 Console.WriteLine(exception);
@@ -164,7 +152,65 @@ namespace PokeApi
             }
         }
 
+        public static void firstMethod()
+        {
 
+            //Declaring method Variables
+            Boolean loop = true;
+
+            do
+            {
+                try
+                {
+                    Console.WriteLine("Please enter a pokedex id");//Tells the user to enter a integer value.
+                    int pokedexID = int.Parse(Console.ReadLine());// Reads the value from the users input.
+
+
+                    if (pokedexID < 1 || pokedexID > 807)//Input validation to make sure value is within the range of all the new pokemon - meltan - melmetal
+                    {
+                        Console.WriteLine("Please enter a value within 1 - 807");// This a message to warn the user of the acceptable range
+                        break;
+                    }
+
+                    //DO Method should close around here -- need to apply another message to user and read key.
+
+
+                    Console.WriteLine("Loading information from api...");//Message to user.
+                    PokéAPI.GetOnePokemon(pokedexID);//Runs the first GET from the first API. Var pokedex is entered from the user input.
+                    loop = false;
+                    Console.ReadLine();//Stops the code from running.
+
+
+
+
+
+
+
+
+
+
+
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: Please only enter a integer value. (Whole numbers)");//Input validation
+
+                }
+
+
+
+
+
+
+
+            } while (loop.Equals(true));//Loops while the codition is true
+        }
+
+        public static void secondMethod()
+        {
+
+        }
 
 
     }

@@ -6,8 +6,11 @@ using Newtonsoft.Json.Linq;
 
 namespace PokeApi
 {
+
     class PokéAPI
     {
+  
+
         public static async void Get151Pokemon()
         {
             //Define your baseUrl
@@ -30,12 +33,12 @@ namespace PokeApi
                             if (data != null)
                             {
                                 //Now log your data in the console
-                                Console.WriteLine("data------------{0}", data);
-                                /**     JObject parsed = JObject.Parse(data);
+                               // Console.WriteLine("data------------{0}", data);
+                                    JObject parsed = JObject.Parse(data);
                                      foreach (var pair in parsed)
                                      {
                                          Console.WriteLine("{0}: {1}", pair.Key, pair.Value);
-                                     }**/
+                                     }
 
 
 
@@ -85,6 +88,8 @@ namespace PokeApi
                                 PokeItem pokeItem = new PokeItem(name: $"{dataObj["name"]}");
                                 //Log your pokeItem's name to the Console.
                                 Console.WriteLine("Pokemon Name: {0}", pokeItem.Name);
+                                
+                               
                                 
                             }
                             else
