@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
+using System.Threading.Tasks;
 
 namespace PokeApi
 {
     class Program
     {
+
+        string selectedPokemon;
+
         static void Main(string[] args)
         {
 
@@ -27,28 +31,14 @@ namespace PokeApi
 
             //Starting Greeting Messages.
             Console.WriteLine("Hello and Welcome to Ryan's Pokemon API Application");//Intro message to the user.
-            firstMethod();
+            string selectedPokemon = firstMethod();
             Console.WriteLine("---------------------");
-            PokemonTCG_API.GetPokemonCards();
-            //  secondMethod();
-
-            Console.WriteLine("Would you like to view the TCG card variations? - y/n"); // message to user 
-            string userString = Console.ReadLine();
+            GetPokemonCards(selectedPokemon);
+            Console.ReadLine();
 
 
-            if (userString.Equals("y"))
-            {
-                //DO API METHOD
-            }
-            else if (userString.Equals("n"))
-            {
-                //BREAK FROM METHOD
-            }
-            else
-            {
-                Console.WriteLine("Please only input either y or n -- for (y)es or (n)o");
 
-            }
+
 
 
             Console.WriteLine("Loading information from second API...");
@@ -57,34 +47,99 @@ namespace PokeApi
         }
 
 
+       
+
+
+     
+
+        public static string firstMethod()
+        {
+
+            //Declaring method Variables
+            Boolean loop = true;
+
+            do
+            {
+                try
+                {
+                    Console.WriteLine("Please enter a pokedex id");//Tells the user to enter a integer value.
+                    int pokedexID = int.Parse(Console.ReadLine());// Reads the value from the users input.
+
+
+                    if (pokedexID < 1 || pokedexID > 807)//Input validation to make sure value is within the range of all the new pokemon - meltan - melmetal
+                    {
+                        Console.WriteLine("Please enter a value within 1 - 807");// This a message to warn the user of the acceptable range
+                        return null;
+                    }
+
+                    //DO Method should close around here -- need to apply another message to user and read key.
+
+
+                    Console.WriteLine("Loading information from api...");//Message to user.
+                   String selectedPokemon = GetOnePokemon(pokedexID).Result.ToString();//Runs the first GET from the first API. Var pokedex is entered from the user input.
+                    loop = false;
+                    return selectedPokemon;
+
+
+
+
+
+
+
+
+
+
+
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: Please only enter a integer value. (Whole numbers)");//Input validation
+                    return null;
+                }
+
+
+
+
+
+
+
+            } while (loop.Equals(true));//Loops while the codition is true
+            return null;
+        }
+
+
+
+        //PokeAPI Functions
+
         public static async void Get151Pokemon()
         {
-            //Define your baseUrl
+            //Defining the Base URl
             string baseUrl = "http://pokeapi.co/api/v2/pokemon/?limit=151";
-            //Have your using statements within a try/catch block
+            //Try catch block
             try
             {
-                //We will now define your HttpClient with your first using statement which will use a IDisposable.
+                
                 using (HttpClient client = new HttpClient())
                 {
-                    //In the next using statement you will initiate the Get Request, use the await keyword so it will execute the using statement in order.
+                    
                     using (HttpResponseMessage res = await client.GetAsync(baseUrl))
                     {
-                        //Then get the content from the response in the next using statement, then within it you will get the data, and convert it to a c# object.
+                        
                         using (HttpContent content = res.Content)
                         {
-                            //Now assign your content to your data variable, by converting into a string using the await keyword.
+                            
                             var data = await content.ReadAsStringAsync();
-                            //If the data isn't null return log convert the data using newtonsoft JObject Parse class method on the data.
+                           
                             if (data != null)
                             {
-                                //Now log your data in the console
-                                Console.WriteLine("data------------{0}", data);
-                                /**     JObject parsed = JObject.Parse(data);
-                                     foreach (var pair in parsed)
-                                     {
-                                         Console.WriteLine("{0}: {1}", pair.Key, pair.Value);
-                                     }**/
+                                
+                                // Console.WriteLine("data------------{0}", data);
+                                JObject parsed = JObject.Parse(data);
+                                foreach (var pair in parsed)
+                                {
+                                    Console.WriteLine("{0}: {1}", pair.Key, pair.Value);
+                                }
 
 
 
@@ -104,42 +159,44 @@ namespace PokeApi
             }
         }
 
-
-        public static async void GetOnePokemon(int pokeId)
+        public static async Task<string> GetOnePokemon(int pokeId)
         {
             //Define your base url
             string baseURL = $"http://pokeapi.co/api/v2/pokemon/{pokeId}/";
             //Have your api call in try/catch block.
             try
             {
-                //Now we will have our using directives which would have a HttpClient 
+
                 using (HttpClient client = new HttpClient())
                 {
-                    //Now get your response from the client from get request to baseurl.
-                    //Use the await keyword since the get request is asynchronous, and want it run before next asychronous operation.
+
                     using (HttpResponseMessage res = await client.GetAsync(baseURL))
                     {
-                        //Now we will retrieve content from our response, which would be HttpContent, retrieve from the response Content property.
+                        
                         using (HttpContent content = res.Content)
                         {
-                            //Retrieve the data from the content of the response, have the await keyword since it is asynchronous.
+                        
                             string data = await content.ReadAsStringAsync();
-                            //If the data is not null, parse the data to a C# object, then create a new instance of PokeItem.
+                        
                             if (data != null)
                             {
-                                //Parse your data into a object.
+                                //Parses the data to a object
                                 var dataObj = JObject.Parse(data);
-                                //Then create a new instance of PokeItem, and string interpolate your name property to your JSON object.
+                                //this will create a new instance of PokeItem, and string interpolate the name property to the JSON object.
                                 //Which will convert it to a string, since each property value is a instance of JToken.
                                 PokeItem pokeItem = new PokeItem(name: $"{dataObj["name"]}");
-                                //Log your pokeItem's name to the Console.
+                                //Logs values into console
                                 Console.WriteLine("Pokemon Name: {0}", pokeItem.Name);
-                                Console.WriteLine("Pokemon URL: {0}", pokeItem.Url);
+                                return pokeItem.Name;
+
+
+
                             }
                             else
                             {
                                 //If data is null log it into console.
                                 Console.WriteLine("Data is null!");
+                                return null;
                             }
                         }
                     }
@@ -149,69 +206,65 @@ namespace PokeApi
             catch (Exception exception)
             {
                 Console.WriteLine(exception);
+                return null;
             }
         }
 
-        public static void firstMethod()
+
+        //PokemonTCG API Functions
+        public static async void GetPokemonCards(string selectedPokemon)
         {
-
-            //Declaring method Variables
-            Boolean loop = true;
-
-            do
+            
+            string baseUrl = "https://api.pokemontcg.io/v1/cards?name="+ selectedPokemon; 
+           
+            try
             {
-                try
+                
+                using (HttpClient client = new HttpClient())
                 {
-                    Console.WriteLine("Please enter a pokedex id");//Tells the user to enter a integer value.
-                    int pokedexID = int.Parse(Console.ReadLine());// Reads the value from the users input.
 
-
-                    if (pokedexID < 1 || pokedexID > 807)//Input validation to make sure value is within the range of all the new pokemon - meltan - melmetal
+                    using (HttpResponseMessage res = await client.GetAsync(baseUrl))
                     {
-                        Console.WriteLine("Please enter a value within 1 - 807");// This a message to warn the user of the acceptable range
-                        break;
+
+                        using (HttpContent content = res.Content)
+                        {
+
+                            var data = await content.ReadAsStringAsync();
+
+                            if (data != null)
+                            {
+                                //Now log your data in the console
+                                //Console.WriteLine("data------------{0}", data);
+                                JObject parsed = JObject.Parse(data);
+                                foreach (var pair in parsed)
+                                {
+                                    Console.WriteLine("{0}: {1}", pair.Key, pair.Value);
+                                }
+
+
+
+                            }
+                            else
+                            {
+                                Console.WriteLine("NO Data----------");
+                            }
+                        }
                     }
-
-                    //DO Method should close around here -- need to apply another message to user and read key.
-
-
-                    Console.WriteLine("Loading information from api...");//Message to user.
-                    PokéAPI.GetOnePokemon(pokedexID);//Runs the first GET from the first API. Var pokedex is entered from the user input.
-                    loop = false;
-                    Console.ReadLine();//Stops the code from running.
-
-
-
-
-
-
-
-
-
-
-
-
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error: Please only enter a integer value. (Whole numbers)");//Input validation
-
-                }
-
-
-
-
-
-
-
-            } while (loop.Equals(true));//Loops while the codition is true
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine("Exception Hit------------");
+                Console.WriteLine(exception);
+            }
         }
-
-        public static void secondMethod()
-        {
-
-        }
-
 
     }
+
+
+    
+
+
+
+
 }
