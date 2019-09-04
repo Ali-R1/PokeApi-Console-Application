@@ -9,9 +9,12 @@ namespace PokeApi
     public string Name { get; set; }
     public string Url { get; set; }
 
-        public PokeItem(string name)
+    public string Species { get; set; }
+
+        public PokeItem(string name, string species)
         {
             Name = name;
+            Species = species;
            
         }
 

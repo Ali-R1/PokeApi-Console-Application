@@ -85,9 +85,9 @@ namespace PokeApi
                                 var dataObj = JObject.Parse(data);
                                 //Then create a new instance of PokeItem, and string interpolate your name property to your JSON object.
                                 //Which will convert it to a string, since each property value is a instance of JToken.
-                                PokeItem pokeItem = new PokeItem(name: $"{dataObj["name"]}");
+                                PokeItem pokeItem = new PokeItem(name: $"{dataObj["name"]}", species: $"{dataObj["species"]["name"]}");
                                 //Log your pokeItem's name to the Console.
-                                Console.WriteLine("Pokemon Name: {0}", pokeItem.Name);
+                                Console.WriteLine("Pokemon Name: {0} is great and is of species {1}", pokeItem.Name, pokeItem.Species );
                                 
                                
                                 
