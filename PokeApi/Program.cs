@@ -17,9 +17,11 @@ namespace PokeApi
             //Starting Greeting Messages.
             Console.WriteLine("Hello and Welcome to Ryan's Pokemon API Application");//Intro message to the user.
             string selectedPokemon = firstMethod();
-            Console.WriteLine("---------------------");
+            Console.WriteLine("--------Press Enter to load the TCG Cards-------------");
+            Console.ReadLine();
             GetPokemonCards(selectedPokemon);
             Console.ReadLine();
+            Console.WriteLine("---------------End of Application-----------------");
 
 
 
