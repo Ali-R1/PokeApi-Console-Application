@@ -14,21 +14,6 @@ namespace PokeApi
         {
 
 
-
-            /////Scrapped Code...
-            // Console.WriteLine("Loading infroamtion for the API!");
-            //Console.WriteLine("Pick a poke id");
-            //string pokeid = Console.ReadLine();
-            //GetOnePokemon(pokeid);
-            //Console.ReadLine();
-            //Console.WriteLine("Press Any key to list all original 151 pokemon");
-            //Get151Pokemon();
-            //Console.ReadLine();
-
-
-
-
-
             //Starting Greeting Messages.
             Console.WriteLine("Hello and Welcome to Ryan's Pokemon API Application");//Intro message to the user.
             string selectedPokemon = firstMethod();
