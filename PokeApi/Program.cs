@@ -170,29 +170,35 @@ namespace PokeApi
                                 //Parses the data to a object
                                 var dataObj = JObject.Parse(data);
                                 //this will create a new instance of PokeItem, and string interpolate the name property to the JSON object.
-                                //Which will convert it to a string, since each property value is a instance of JToken.
-                                
+                                ////Which will convert it to a string, since each property value is a instance of JToken.
 
 
-                                PokeItem pokeItem = new PokeItem(name: $"{dataObj["name"]}" // for the pokemon's name
+
+
+
+                                try
+                                {
+                                    PokeItem pokeItems = new PokeItem(name: $"{dataObj["name"]}" // for the pokemon's name
                                     , sprite: $"{dataObj["sprites"]["front_default"]}" // for the sprite url
-                                    , type:$"{dataObj["types"][0]["type"]["name"]}" //for the types  - dont know if it prints for dual type
-                                    ,pokedexid:$"{dataObj["id"]}"); //for the pokedex id
-                                //Log your pokeItem's name to the Console.
-                                // This utilisies composite formatting
-                                Console.WriteLine("Pokemon Name: {0} \nSprite URL: {1} \nPokemon Type(s): {2}\nPokedex ID: {3}", pokeItem.Name, pokeItem.Sprite, pokeItem.pokemonType, pokeItem.pokedexID);
-
-                             
+                                    , type: $"{dataObj["types"][0]["type"]["name"] + "/" + dataObj["types"][1]["type"]["name"]}" //for the types  
+                                    , pokedexid: $"{dataObj["id"]}");
+                                    Console.WriteLine("Pokemon Name: {0} \nSprite URL: {1} \nPokemon Type(s): {2}\nPokedex ID: {3}", pokeItems.Name, pokeItems.Sprite, pokeItems.pokemonType, pokeItems.pokedexID);
+                                    return pokeItems.Name;
 
 
+                                }
+                                catch(Exception ex)
+                                {
+                                    PokeItem pokeItems = new PokeItem(name: $"{dataObj["name"]}" // for the pokemon's name
+                                    , sprite: $"{dataObj["sprites"]["front_default"]}" // for the sprite url
+                                    , type: $"{dataObj["types"][0]["type"]["name"]}" //for the types  - dont know if it prints for dual type
+                                    , pokedexid: $"{dataObj["id"]}");
 
+                                    Console.WriteLine("Pokemon Name: {0} \nSprite URL: {1} \nPokemon Type: {2}\nPokedex ID: {3}", pokeItems.Name, pokeItems.Sprite, pokeItems.pokemonType, pokeItems.pokedexID);
 
-                                // Add the Species in, and include within the template string below 
+                                    return pokeItems.Name;
+                                }
 
-
-                                //Logs values into console
-                                //Console.WriteLine("Pokemon Name: {0}", pokeItem.Name);
-                                return pokeItem.Name;
 
 
 
