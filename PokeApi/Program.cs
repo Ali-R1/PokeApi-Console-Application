@@ -171,9 +171,20 @@ namespace PokeApi
                                 var dataObj = JObject.Parse(data);
                                 //this will create a new instance of PokeItem, and string interpolate the name property to the JSON object.
                                 //Which will convert it to a string, since each property value is a instance of JToken.
-                                PokeItem pokeItem = new PokeItem(name: $"{dataObj["name"]}", url: $"{dataObj["species"]["url"]}");
+                                
+
+
+                                PokeItem pokeItem = new PokeItem(name: $"{dataObj["name"]}" // for the pokemon's name
+                                    , sprite: $"{dataObj["sprites"]["front_default"]}" // for the sprite url
+                                    , type:$"{dataObj["types"][0]["type"]["name"]}" //for the types  - dont know if it prints for dual type
+                                    ,pokedexid:$"{dataObj["id"]}"); //for the pokedex id
                                 //Log your pokeItem's name to the Console.
-                                Console.WriteLine("Pokemon Name: {0} is great and is has a url of {1}", pokeItem.Name, pokeItem.Url);
+                                // This utilisies composite formatting
+                                Console.WriteLine("Pokemon Name: {0} \nSprite URL: {1} \nPokemon Type(s): {2}\nPokedex ID: {3}", pokeItem.Name, pokeItem.Sprite, pokeItem.pokemonType, pokeItem.pokedexID);
+
+                             
+
+
 
 
                                 // Add the Species in, and include within the template string below 
@@ -209,7 +220,7 @@ namespace PokeApi
         public static async void GetPokemonCards(string selectedPokemon)
         {
             
-            string baseUrl = "https://api.pokemontcg.io/v1/cards?name="+ selectedPokemon; 
+            string baseUrl = $"https://api.pokemontcg.io/v1/cards?name={selectedPokemon}"; //Sets the base url... This utilises compisite strings
            
             try
             {
